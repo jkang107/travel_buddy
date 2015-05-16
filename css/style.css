@@ -341,21 +341,21 @@ blockquote {
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
 	border: 1px solid #f0f0f0;
 	border-top: none;
-	background-color: #fafafa
+	/* background-color: #fafafa */
 }
 .panel-heading a {
 	font-weight: 400;
 	padding: 12px 35px 12px 15px;
 	display: inline-block;
 	width: 100%;
-	background-color: #55acee;
-	color: #ffffff;
+	/* background-color: #55acee;
+	color: #ffffff; */
 	position: relative;
 	text-decoration: none;
 }
 .panel-heading a.collapsed {
-	color: #ffffff;
-	background-color: #333333;
+	/* color: #ffffff;
+	background-color: #333333; */
 }
 .panel-heading a:after {
 	font-family: "FontAwesome";
@@ -373,8 +373,8 @@ blockquote {
 }
 .panel-heading a:hover {
 	text-decoration: none;
-	background-color: #55acee;
-	color: #ffffff;
+	/* background-color: #55acee;
+	color: #ffffff; */
 }
 .panel-title a i {
 	padding-right: 10px;

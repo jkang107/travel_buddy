@@ -1,0 +1,77 @@
+.option-button {
+    height:100%;
+}
+
+.media-object {
+    height: 100px;
+}
+body {
+  font-family: 'Jeju Gothic', serif;
+  /*font-size: 48px;*/
+}
+
+a:hover, a:focus { text-decoration: none; }
+
+.margin_label { 
+  padding: 5px;
+}
+
+.panel_body_padding {
+  padding: 5px 0px;
+}
+
+.modal-content {
+  background: url('../images/submit_bg.png');
+
+}
+
+.panel-heading {
+  background-image: none;
+    background-color: #627C6A;
+     color: white;
+}
+
+.inner_list {
+  margin-right: 20px;
+  float: left;
+}
+
+.inner_text {
+  padding:7px; 
+  border:solid 1px #a1a1a1; 
+  border-radius: 25px;
+  color: #445448;
+  /*font-size: 80%;*/
+  line-height: 50px;
+  vertical-align: middle;
+}
+
+.inner_text_date {
+  border: 1px solid #a1a1a1;
+  background: #E0E0E0;
+}
+
+.inner_text_trans {
+  background: #FCF6FD;
+}
+
+.inner_text_gender{
+  background: #F3F3F3;
+}
+
+.inner_text_gender_w{
+  /*background:url('../images/sample_bg_1.png');*/
+  background: #F3F3F3;
+}
+
+.inner_text_gender_m{
+  /*background:url('../images/Blurred Background (24).png');*/
+  background: #F3F3F3;
+}
+
+
+.inner_text_gender_more{
+  /*background:url('../images/sample_bg_3.png');*/
+  background: #F3F3F3;
+}
+
