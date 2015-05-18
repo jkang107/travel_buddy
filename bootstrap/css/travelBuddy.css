@@ -74,4 +74,11 @@ a:hover, a:focus { text-decoration: none; }
   /*background:url('../images/sample_bg_3.png');*/
   background: #F3F3F3;
 }
+/*
+.panel-title {
+  font-size: 1em;
+}*/
 
+.btn_form {
+  min-width: 50px;
+}

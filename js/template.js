@@ -109,5 +109,10 @@
 			});
 		}
 
+		//Buddy
+		$("#submit_travel").on('click', addNewTravel);
+        $("#travel_type").click(chooseTravelType);
+        $("#newTravelBtn").click(showTravelForm);
+
 	}); // End document ready
 })(this.jQuery);

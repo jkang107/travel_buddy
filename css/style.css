@@ -83,6 +83,10 @@ img {
 	display: block;
 	max-width: 100%;
 	height: auto;
+	/* Jinah */
+	margin-left: auto;
+  	margin-right: auto;
+  	/* Jinah */
 }
 .list-unstyled li {
 	padding: 5px 0;
@@ -427,11 +431,13 @@ textarea {
 	border-radius: 0px;
 }
 .modal-header {
-	background-color: #55acee;
-	color: #ffffff;
+	/* JINAH comment out*/
+	/*background-color: #55acee;
+	color: #ffffff;*/
 }
 .modal-header h4 {
-	color: #ffffff;
+	/* JINAH comment out*/
+	/*color: #ffffff;*/
 }
 .modal-header .close {
 	font-weight: 300;
