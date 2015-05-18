@@ -441,7 +441,7 @@ textarea {
 }
 .modal-header .close {
 	font-weight: 300;
-	color: #FFFFFF;
+	/*color: #FFFFFF;*/
 	text-shadow: none;
 	filter: alpha(opacity=100);
 	opacity: 1;
