@@ -125,9 +125,17 @@
         });
 
         $('.datepicker-container input').datepicker({
-		    autoclose: true,
-		    todayHighlight: true
-		});
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $("#findBuddy").click(function() {
+            $("#viewList").trigger("click");
+        });
+
+        $("#kakaoLogin").click(function() {
+            $("#kakao-login-btn").trigger('click');
+        });
 
     }); // End document ready
 })(this.jQuery);

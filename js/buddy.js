@@ -1,7 +1,51 @@
+// kakaotalk
+
+// KAKAO TALK JavaScript Key
+Kakao.init('8153126b123d384678442ece2cfd1ed8');
+
+// create login button
+Kakao.Auth.createLoginButton({
+    container: '#kakao-login-btn',
+    success: function(authObj) {
+
+        Kakao.API.request({
+            url: '/v1/user/me',
+            success: function(res) {
+                //alert(JSON.stringify(res));
+                $("#nickname").text(res.properties.nickname);
+                $("#userId").text("ID : " + res.id);
+                $("#thumbnail_image").attr("src", res.properties.thumbnail_image);
+                //$("#profile_image").attr("src", res.properties.profile_image);
+            },
+            fail: function(error) {
+                alert(JSON.stringify(error));
+            }
+        });
+    },
+    fail: function(err) {
+        console.log(JSON.stringify(err));
+    }
+});
+
+function loginWithKakao() {
+    // 로그인 창을 띄웁니다.
+    Kakao.Auth.login({
+        success: function(authObj) {
+            alert(JSON.stringify(authObj));
+        },
+        fail: function(err) {
+            alert(JSON.stringify(err));
+        }
+    });
+}
+
+
 
 var containerNum = 1;
 var panelStyle, titleImage;
 var user_kakaotalk_thumbnail;
+
+
 var chooseTravelType = function() {
     var selectedType = event.target.id;
     console.log("select " + selectedType);
@@ -24,9 +68,10 @@ var chooseTravelType = function() {
     }
 
     $("#type" + containerNum + "_container").css("display", "block");
-}
+};
 
 var addNewTravel = function() {
+    $('#createTravel').modal('hide');
     var countryArr = [];
     $("#travel_country").find(".active").each(function() {
         countryArr.push($(this).text());
@@ -38,7 +83,7 @@ var addNewTravel = function() {
         travel_type: travelType,
         user_gender: $("#client_gender").find(".active").children().get(0).id,
         user_age: $("#client_age").find(".active").children().get(0).id
-    }
+    };
 
     var travelInfo;
 
@@ -51,7 +96,7 @@ var addNewTravel = function() {
                 date_to: $("#travel_date_to").val(),
                 country_from: countryArr,
                 comment: $("#travel_detail1").val()
-            }
+            };
             panelStyle = "panel-success";
             titleImage = "travel_man_64.png";
 
@@ -66,7 +111,7 @@ var addNewTravel = function() {
                 city_to: $("#move_to").val(),
                 transportation: $("#transportation_button").find(".active").children().get(0).id,
                 comment: $("#travel_detail2").val()
-            }
+            };
             panelStyle = "panel-info";
             titleImage = "taxi_64.png";
 
@@ -79,7 +124,7 @@ var addNewTravel = function() {
                 country_from: $("#tour_contry option:selected").val(),
                 tour_name: $("#tour_name").val(),
                 comment: $("#travel_detail3").val()
-            }
+            };
             panelStyle = "panel-warning";
             titleImage = "biking_64.png";
 
@@ -91,7 +136,7 @@ var addNewTravel = function() {
                 country_from: $("#food_country option:selected").val(),
                 city_from: $("#food_city").val(),
                 comment: $("#travel_detail4").val()
-            }
+            };
             panelStyle = "panel-danger";
             titleImage = "food_64.png";
 
@@ -102,20 +147,20 @@ var addNewTravel = function() {
     createNewTravel(userInfo, travelInfo);
     console.log("==== Create new travel! ====");
     $("#createTravel").css("display", "none");
-}
+};
 
 var showTravelForm = function() {
     $("#createTravel").toggle();
 
     //$("#container").css("opacity", "0.7");
-}
+};
 var Travel = function(user, travelInfo) {
     /*this.type = type;
     this.gender = gender;
     this.age = age;*/
     this.id = user.userId;
     this.info = travelInfo;
-}
+};
 
 function createNewTravel(user, travel) {
     var newUser = new Travel(user, travel);
@@ -130,7 +175,7 @@ function createNewObject(user, travel) {
 
     $("#accordion").prepend("<div id='object_" + count + "' class='panel panel-default " + panelStyle + "'></div>");
 
-    $("#object_" + count).append("<div class='panel-heading' role='tab' id='heading_" + count + "'><h4 class='panel-title'><a id='heading_t_" + count + "' class='collapsed' data-toggle='collapse' data-parent='#accordion' href='#collapse_" + count + "' aria-expanded='false' aria-controls='collapse_" + count + "'><i class='indicator glyphicon glyphicon-chevron-up  pull-right'></i></a></h4></div>");
+    $("#object_" + count).append("<div class='panel-heading' role='tab' id='heading_" + count + "'><h4 class='panel-title'><a data-toggle='collapse' id='heading_t_" + count + "' data-parent='#accordion' href='#collapse_" + count + "' aria-expanded='false' aria-controls='collapse_" + count + "'></a></h4></div>");
 
     $("#object_" + count).append("<div id='collapse_" + count + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count + "'><div class='panel-body'>" + travel.comment + "</div></div>");
 
@@ -139,14 +184,14 @@ function createNewObject(user, travel) {
     var _object = $("#heading_t_" + count);
 
     //add kakaotalk
-    _object.append("<img src='" + tmpKakaoThumbnail + "' class='img-circle inner_list' alt='kakaotalk thumbnail' width='35' height='35'>");
+    _object.append("<img src='" + tmpKakaoThumbnail + "' class='img-circle inner_list' alt='kakaotalk thumbnail' width='50' height='50'>");
 
     //add travel type
-    _object.append("<img src='images/" + titleImage + "' class='inner_list' alt='travel' width='35' height='35'>");
+    _object.append("<img src='./bootstrap/images/" + titleImage + "' class='inner_list' alt='travel' width='50' height='50'>");
 
     //add gender
     var tmp_gender = user.user_gender;
-    _object.append("<span id='_gender' class='inner_list inner_text'></span>");
+    _object.append("<span id='_gender' class='inner_text'></span>");
     //var tmp_gender_class;
     if (tmp_gender == "man") {
         tmp_gender = "남";
@@ -165,7 +210,7 @@ function createNewObject(user, travel) {
 
     //add age
     var tmp_age = $("#client_age").find(".active").children().get(0).id.split("_")[1] + "대";
-    _object.append("<span id='_age' class='inner_list inner_text inner_text_gender'>" + tmp_age + "</span>");
+    _object.append("<span id='_age' class='inner_text inner_text_gender'>" + tmp_age + "</span>");
 
 
     //transportation
@@ -184,26 +229,26 @@ function createNewObject(user, travel) {
                 tmp_trans = "지하철이동";
                 break;
         }
-        _object.append("<span id='_transportation' class='inner_list inner_text inner_text_trans'>#" + tmp_trans + "</span>");
+        _object.append("<span id='_transportation' class='inner_text inner_text_trans'>#" + tmp_trans + "</span>");
     }
 
     //add travel country_from
     if (typeof travel.country_from == "string") {
-        _object.append("<span id='_country_from' class='inner_list inner_text'>#" + travel.country_from + "</span>");
+        _object.append("<span id='_country_from' class='inner_text'>#" + travel.country_from + "</span>");
     } else {
         for (var i = 0; i < travel.country_from.length; i++) {
-            _object.append("<span id='_country_from' class='inner_list inner_text'>#" + travel.country_from[i] + "</span>");
+            _object.append("<span id='_country_from' class='inner_text'>#" + travel.country_from[i] + "</span>");
         }
     }
 
     //add travel city_to
     if (travel.hasOwnProperty('city_from')) {
-        _object.append("<span id='_city_from' class='inner_list inner_text'>#" + travel.city_from + "</span>");
+        _object.append("<span id='_city_from' class='inner_text'>#" + travel.city_from + "</span>");
     }
 
     //add tour/trekking name
     if (travel.hasOwnProperty('tour_name')) {
-        _object.append("<span id='_tour_name' class='inner_list inner_text'>#" + travel.tour_name + "</span>");
+        _object.append("<span id='_tour_name' class='inner_text'>#" + travel.tour_name + "</span>");
     }
 
     //add travel date
@@ -215,9 +260,9 @@ function createNewObject(user, travel) {
     if (travel.hasOwnProperty('date_to')) {
         var tmp_to = travel.date_to.split("/");
         tmp_to = tmp_to[0] + "월" + tmp_to[1] + "일";
-        _object.append("<span id='_date_to' class='inner_list inner_text inner_text_date'>" + tmp_from + " ~ " + tmp_to + "</span>");
+        _object.append("<span id='_date_to' class='inner_text inner_text_date'>" + tmp_from + " ~ " + tmp_to + "</span>");
     } else {
-        _object.append("<span id='_date_to' class='inner_list inner_text inner_text_date'>" + tmp_from + "</span>");
+        _object.append("<span id='_date_to' class='inner_text inner_text_date'>" + tmp_from + "</span>");
     }
 
 
