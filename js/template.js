@@ -138,6 +138,6 @@
         $("#kakaoLogin").click(function() {
             $("#kakao-login-btn").trigger('click');
         });
-
+        getTravelList();
     }); // End document ready
 })(this.jQuery);

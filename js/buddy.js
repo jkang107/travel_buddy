@@ -382,3 +382,22 @@ function sendToServer(userInfo, travelInfo) {
     });
 
 }
+
+function getTravelList() {
+    var url = "http://localhost:5000/getTravelList";
+    $.ajax({
+        type: 'GET',
+        url: url,
+        //url: "http://localhost:5000/getMessages",
+        success: function(result) {
+            /*var newStr = "[" + result.replace(/}{/gi, '},{') + "]";
+            messageJson = JSON.parse(newStr);
+            console.time("success" + messageJson);
+            viewMessage();*/
+            console.log(result);
+        },
+        error: function(a,b) {
+          console.log("error: " + a + b);
+        }
+      });
+}
