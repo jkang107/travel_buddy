@@ -11,10 +11,11 @@ Kakao.Auth.createLoginButton({
         Kakao.API.request({
             url: '/v1/user/me',
             success: function(res) {
-                //alert(JSON.stringify(res));
-                $("#nickname").text(res.properties.nickname);
-                $("#userId").text("ID : " + res.id);
-                $("#thumbnail_image").attr("src", res.properties.thumbnail_image);
+                //$("#userId").text("ID : " + res.id);
+                //$("#profil_img").attr("src", res.properties.thumbnail_image);
+                sendLoginInfo(res);
+                isLogin = true;
+                afterLogin(res.properties);
                 //$("#profile_image").attr("src", res.properties.profile_image);
             },
             fail: function(error) {
@@ -27,19 +28,79 @@ Kakao.Auth.createLoginButton({
     }
 });
 
+function sendLoginInfo(userInfo) {
+    var url = "http://localhost:5000/sendLoginInfo";
+    response = $.post(url, {
+        userInfo: userInfo
+    });
+
+    response.success(function(e) {
+        console.log("Message from server : " + e);
+
+    });
+
+    response.error(function(e) {
+        // Handle any errors here.
+    });
+}
+function afterLogin(kakao_userInfo) {
+    $("#login_container").prepend('<img id="profil_img" src="' + kakao_userInfo.profile_image + '" class="img-circle profile">');
+    $("#login_name").text(kakao_userInfo.nickname);
+    $("#login_name").css({"float": "left", "margin-left" : "-13px"});
+    $("#login_fade").css("display", "none");
+    $("#login").css("display", "none");
+    $("#login_name").attr("data-toggle", "dropdown").addClass('dropdown-toggle').append("<b class='caret'></b>");
+    $("#login_container").append('<ul class="dropdown-menu"><li><a href="#">My Account</a></li><li class="divider"></li><li><a href="javascript:kakao_logout()">Logout</a></li></ul>');
+    if(isPressNewBtn) {
+        $('#createTravel').css('z-index', '1040');
+    }
+}
+
+function afterLogout() {
+    $("#login_name").text("로그인");
+    $("#login_name").css({"float": "", "margin-left" : "0px"});
+    $("#profil_img").remove();
+    $("#login_name").removeAttr("data-toggle").removeClass('dropdown-toggle');
+    $("b .caret").remove();
+    $(".dropdown-menu").remove();
+}
+
 function loginWithKakao() {
-    // 로그인 창을 띄웁니다.
+    /*// 로그인 창을 띄웁니다.
     Kakao.Auth.login({
         success: function(authObj) {
             alert(JSON.stringify(authObj));
+            $("#login_name").text(authObj.properties.nickname);
         },
         fail: function(err) {
             alert(JSON.stringify(err));
         }
-    });
+    });*/
 }
 
+function kakao_logout() {
+    Kakao.Auth.logout();
+    isLogin = false;
+    afterLogout();
+}
 
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function initialize() {
+    var options = {
+            types: ['(cities)']
+        };
+
+        var input = document.getElementById('move_from');
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+}
+
+// Login window
+function popupLoginWindow () {
+    $("#login").css("display", "block");
+    $("#login_fade").css("display", "block");
+
+}
 
 var containerNum = 1;
 var panelStyle, titleImage;
@@ -146,14 +207,33 @@ var addNewTravel = function() {
 
     createNewTravel(userInfo, travelInfo);
     console.log("==== Create new travel! ====");
-    $("#createTravel").css("display", "none");
+    //$("#createTravel").css("display", "none");
 };
 
+var isLogin = false;
+var isPressNewBtn = false;
 var showTravelForm = function() {
-    $("#createTravel").toggle();
+    if(isLogin) {
+        isPressNewBtn = true;
+        $("#createTravel").toggle();
+    } else {
+        $('#createTravel').css('z-index', '-1');
+        isPressNewBtn = true;
+        popupLoginWindow();
+    }
 
     //$("#container").css("opacity", "0.7");
 };
+
+$("#login_fade").click(function() {
+    $("#login_fade").css("display", "none");
+    $("#login").css("display", "none");
+});
+
+$("#login_close_btn").click(function() {
+    $("#login_fade").css("display", "none");
+    $("#login").css("display", "none");
+});
 var Travel = function(user, travelInfo) {
     /*this.type = type;
     this.gender = gender;

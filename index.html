@@ -83,18 +83,11 @@
                                     <!-- Collect the nav links, forms, and other content for toggling -->
                                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                                         <ul class="nav navbar-nav navbar-right">
-                                            <li class="active"><a href="#banner">Home</a></li>
-                                            <li><a id='viewList' href="#about">About</a></li>
-                                            <li><a href="#services">Services</a></li>
-                                            <!--                                                <li><a href="#services2">Services2</a></li>
-                                                 -->
-                                            <!-- <li><a href="#portfolio">Portfolio</a></li>
-                                                <li><a href="#clients">Clients</a></li> -->
-                                            <li><a href="#contact">Contact</a></li>
-                                            <li>
-                                                <a href="javascript:loginWithKakao()" id="custom-login-btn">
-                                                    <img src="./bootstrap/images/kakao_login_btn_small.png"></img>
-                                                </a>
+                                            <li class="active"><a href="#banner">홈</a></li>
+                                            <li><a id='viewList' href="#about">동행 찾기</a></li>
+                                            <!-- <li><a href="#services">Services</a></li> -->
+                                            <li><a href="#contact">개발자에게 힘 보태기</a></li>
+                                            <li id='login_container' class="dropdown"><a id='login_name' href="javascript:popupLoginWindow()">로그인</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -121,17 +114,26 @@
                         <h1 class="text-center">Find your <span>Travel Buddy</span></h1>
                         <p class="lead text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos debitis provident nulla illum minus enim praesentium repellendus ullam cupiditate reiciendis optio voluptatem, recusandae nobis quis aperiam, sapiente libero ut at.</p>
                         <div style="text-align:center;">
-                            <button type="button" class="btn-primary btn-lg" data-toggle="modal" data-target="#createTravel">
+                            <button id='newTravelBtn' type="button" class="btn-primary btn-lg" data-toggle="modal" data-target="#createTravel">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 동행 구하기
                             </button>
-                            <!-- <button type="button" id='findBuddy' class="btn-default btn-lg" style='position: relative; top: -18px;'> -->
                             <button type="button" id='findBuddy' class="btn-default btn-lg">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 동행 찾기
                             </button>
-                            <!-- <a id="kakao-login-btn"></a> -->
                         </div>
                     </div>
                 </div>
+                <!-- login star -->
+                <div id='login_container'>
+                    <div id='login_fade'></div>
+                    <div id='login'>
+                        <div class='login_text'>카카오톡으로 로그인하기</div>
+                        <a id="kakao-login-btn"></a>
+                        <button id='login_close_btn' type="button" class="btn btn-default login_close">다음에 할께요</button>
+                    </div>
+                </div>
+
+                <!-- login end -->
                 <!-- travel form start -->
                 <!-- Modal -->
                 <div class="modal fade " id="createTravel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -183,10 +185,6 @@
                                             <input type="radio" name="options" id="woman" autocomplete="off">여자
                                             <!-- <image src='./bootstrap/images/woman_64.png' /> -->
                                         </label>
-                                        <!-- <label class="btn btn-default btn_form col-lg-3">
-                                    <input type="radio" name="options" id="more" autocomplete="off">2명 이상
-                                     <image src='./bootstrap/images/travel_man_64.png' />
-                                </label> -->
                                     </div>
                                     <div id='client_age' class="btn-group col-lg-8 col-sm-6 col-xs-12 panel_body_padding" data-toggle="buttons">
                                         <label class='col-lg-2 col-xs-3 margin_label'>나이대</label>
@@ -211,17 +209,6 @@
                                     <h3 class="panel-title">Step 3. About travel</h3>
                                 </div>
                                 <div id='type1_container' style='display:block;'>
-                                    <!-- <div id='date_body' class="panel-body">
-                                <div class="form-group">
-                                    <label class='col-lg-12 col-sm-12 col-xs-12 margin_label'>여행기간 </label>
-                                    <div class='col-lg-6 col-sm-6 col-xs-6 panel_body_padding'>From:
-                                        <input id='travel_date_from' data-provide="datepicker">
-                                    </div>
-                                    <div class='col-lg-6 col-sm-6 col-xs-6 panel_body_padding'>To:
-                                        <input id='travel_date_to' data-provide="datepicker">
-                                    </div>
-                                </div>
-                            </div> -->
                                     <div class="panel-body datepicker-container-range">
                                         <div class="input-daterange">
                                             <label class='col-lg-12 col-sm-12 col-xs-12 margin_label'>여행기간 </label>
@@ -265,8 +252,6 @@
                                             <div class='col-lg-1'></div>
                                             <div class='col-lg-8'>
                                                 <div class="input-group col-lg-5 col-sm-4 col-xs-12" style="float:left;">
-                                                    <!-- <span class="input-group-addon" >출발지</span>
-                                <input type="text" id="move_from" class="form-control" placeholder="도시명"> -->
                                                     <select id='move_from_country' class="selectpicker" title='국가'>
                                                         <option>콜롬비아</option>
                                                         <option>에콰도르</option>
@@ -277,7 +262,7 @@
                                                         <option>브라질</option>
                                                         <option>멕시코</option>
                                                     </select>
-                                                    <input type="text" id="move_from" class="form-control" placeholder="출발 도시명">
+                                                    <input id="move_from" type="text" class="form-control" placeholder="출발 도시명" autocomplete="on">
                                                 </div>
                                                 <div class='col-lg-1'></div>
                                                 <div class="input-group col-lg-5 col-sm-4 col-xs-12" style="float:left;">
@@ -291,7 +276,7 @@
                                                         <option>브라질</option>
                                                         <option>멕시코</option>
                                                     </select>
-                                                    <input type="text" id="move_to" class="form-control" placeholder="도착 도시명">
+                                                    <input type="text" id="move_to" class="form-control" placeholder="도착 도시명" autocomplete="on">
                                                 </div>
                                             </div>
                                         </div>
@@ -380,7 +365,7 @@
                                                     <option>브라질</option>
                                                     <option>멕시코</option>
                                                 </select>
-                                                <input type="text" id="food_city" class="form-control" placeholder="도시명">
+                                                <input type="text" id="food_city" class="form-control" placeholder="도시명" autocomplete="on">
                                             </div>
                                         </div>
                                     </div>
@@ -406,7 +391,7 @@
     <!-- banner end -->
     <!-- section start -->
     <!-- ================ -->
-    <div class="section clearfix object-non-visible" data-animation-effect="fadeIn">
+    <div class="section clearfix bg-image-1 object-non-visible" data-animation-effect="fadeIn">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -561,213 +546,6 @@
         </div>
     </div>
     <!-- section end -->
-    <!-- section start -->
-    <!-- ================ -->
-    <div class="section translucent-bg bg-image-1 blue">
-        <div class="container object-non-visible" data-animation-effect="fadeIn">
-            <h1 id="services" class="text-center title">Worthy Services</h1>
-            <div class="space"></div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="media">
-                        <div class="media-body text-right">
-                            <h4 class="media-heading">Service 1</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                        <div class="media-right">
-                            <i class="fa fa-cog"></i>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <div class="media-body text-right">
-                            <h4 class="media-heading">Service 2</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                        <div class="media-right">
-                            <i class="fa fa-check"></i>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <div class="media-body text-right">
-                            <h4 class="media-heading">Service 3</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                        <div class="media-right">
-                            <i class="fa fa-desktop"></i>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <div class="media-body text-right">
-                            <h4 class="media-heading">Service 4</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                        <div class="media-right">
-                            <i class="fa fa-users"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="space visible-xs"></div>
-                <div class="col-sm-6">
-                    <div class="media">
-                        <div class="media-left">
-                            <i class="fa fa-leaf"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Service 5</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <div class="media-left">
-                            <i class="fa fa-area-chart"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Service 6</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <div class="media-left">
-                            <i class="fa fa-child"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Service 7</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <div class="media-left">
-                            <i class="fa fa-codepen"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Service 8</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- section end -->
-    <!-- 
-        section start
-        ================
-        <div class="section translucent-bg bg-image-1 blue">
-            <div class="container object-non-visible" data-animation-effect="fadeIn">
-                <h1 id="services2"  class="text-center title">Worthy Services2</h1>
-                <div class="space"></div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="media">
-                            <div class="media-body text-right">
-                                <h4 class="media-heading">Service 1</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                            </div>
-                            <div class="media-right">
-                                <i class="fa fa-cog"></i>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-body text-right">
-                                <h4 class="media-heading">Service 2</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                            </div>
-                            <div class="media-right">
-                                <i class="fa fa-check"></i>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-body text-right">
-                                <h4 class="media-heading">Service 3</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                            </div>
-                            <div class="media-right">
-                                <i class="fa fa-desktop"></i>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-body text-right">
-                                <h4 class="media-heading">Service 4</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure aperiam consequatur quo quis exercitationem reprehenderit dolor vel ducimus, voluptate eaque suscipit iste placeat.</p>
-                            </div>
-                            <div class="media-right">
-                                <i class="fa fa-users"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="space visible-xs"></div>
-                    <div class="col-sm-8">
-                        <div class="media">
-                            <div class="media-body">
-                                <h4 class="media-heading">List</h4>
-                                <div class='col-md-8'>
-                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default panel-success">
-
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                        <a class='collapsed' data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-                            <img src="http://mud-kage.kakao.co.kr/14/dn/btqb4CAgAzI/RQ6IGbda4CN2krpdNJ5aOk/o.jpg" class="img-circle inner_list" alt="Cinque Terre" width="50" height="50">
-                            <img src="./bootstrap/images/travel_man_64.png" class="inner_list" alt="Cinque Terre" width="50" height="50">
-                            <span id='_country' class='inner_list inner_text'>#콜롬비아/보고타</span>
-                            <span id='_country' class='inner_list inner_text'>#에콰도르/키토</span>
-                            <span id='_country' class='inner_list inner_text'>#페루</span>
-                            <span id='_country' class='inner_list inner_text inner_text_date'>5월25일 ~ 5월30일</span>
-                        </a>
-                      </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        카카오톡 ID: uresj3
-                    </div>
-                </div>
-            </div>
-        </div>
-            <div class="panel panel-default panel-info">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                    <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-          <img src="http://mud-kage.kakao.co.kr/14/dn/btqb4CAgAzI/RQ6IGbda4CN2krpdNJ5aOk/o.jpg" class="img-circle inner_list" alt="Cinque Terre" width="50" height="50">
-                            <img src="./bootstrap/images/food_64.png" class="inner_list" alt="Cinque Terre" width="50" height="50">
-                            <span id='_country' class='inner_list inner_text'>#부에노스아이레스</span>
-                            <span id='_country' class='inner_list inner_text inner_text_date'>6월13일 ~ 5월30일</span>
-        </a>
-      </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default panel-warning">
-                <div class="panel-heading" role="tab" id="headingThree">
-                    <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
-          <img src="http://mud-kage.kakao.co.kr/14/dn/btqb4CAgAzI/RQ6IGbda4CN2krpdNJ5aOk/o.jpg" class="img-circle inner_list" alt="Cinque Terre" width="50" height="50">
-                            <img src="./bootstrap/images/taxi_64.png" class="inner_list" alt="Cinque Terre" width="50" height="50">
-                            <span id='_country' class='inner_list inner_text'>#콜롬비아</span>
-                            <span id='_country' class='inner_list inner_text'>#에콰도르</span>
-                            <span id='_country' class='inner_list inner_text'>#페루</span>
-                            <span id='_country' class='inner_list inner_text inner_text_date'>5월25일 ~ 5월30일</span>
-        </a>
-      </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                    <div class="panel-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                </div>
-            </div>
-        </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    <!-- section end -->
     <!-- footer start -->
     <!-- ================ -->
     <footer id="footer">
@@ -780,9 +558,9 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="footer-content">
-                            <p class="large">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nam magnam natus tempora cumque, aliquam deleniti voluptatibus voluptas. Repellat vel, et itaque commodi iste ab, laudantium voluptas deserunt nobis.</p>
+                            <p class="large">어떠한 의견, 질타, 칭찬 모두 환영합니다.</br> 이 서비스를 통해서 많은 배낭 여행자들이 안전하고 즐겁게 여행하길 바랍니다 :) </p>
                             <ul class="list-icons">
-                                <li><i class="fa fa-map-marker pr-10"></i> Seoul, 54100</li>
+                                <li><i class="fa fa-map-marker pr-10"></i> YangJae Dong, Seoul, 54100</li>
                                 <li><i class="fa fa-phone pr-10"></i> +82 1096688106</li>
                                 <li><i class="fa fa-fax pr-10"></i> +82 1096688106 </li>
                                 <li><i class="fa fa-envelope-o pr-10"></i> jkang107@gmail.com</li>
@@ -852,6 +630,7 @@
     <!-- Appear javascript -->
     <script type="text/javascript" src="plugins/jquery.appear.js"></script>
     <!-- Initialization of Plugins -->
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
     <script type="text/javascript" src="js/template.js"></script>
     <!-- Custom Scripts -->
     <script type="text/javascript" src="js/custom.js"></script>

@@ -242,7 +242,9 @@ blockquote {
 .bg-image-2 {
 	background: url("../images/bg-image-2.jpg") 50% 0px no-repeat;
 }
-
+.bg-image-3 {
+	background: url("../images/IMG_1686.jpg") 50% 0px no-repeat;
+}
 /* Misc
 ----------------------------------------------------------------------------- */
 .object-non-visible {
@@ -530,10 +532,10 @@ textarea {
 	margin-bottom: 0;
 }
 @media (min-width:768px) {
-	.fixed-header-on .navbar-default .navbar-nav > li > a {
+	/* .fixed-header-on .navbar-default .navbar-nav > li > a {
 		padding-top: 20px;
 		padding-bottom: 20px;
-	}
+	} */ /* jinah: 스크롤 동작에 따라 헤더 크기가 바뀌는데 이거 있을땐, 프사 이미지 위치가 움직이지 않아서 지움 */;
 }
 @media (max-width:991px) {
 	.fixed-header-on .logo,

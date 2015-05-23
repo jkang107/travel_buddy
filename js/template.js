@@ -10,7 +10,7 @@
 (function($) {
     $(document).ready(function() {
 
-        $(".banner-image").backstretch('images/banner.jpg');
+        $(".banner-image").backstretch('images/DSC00605.JPG');
 
         // Fixed header
         //-----------------------------------------------
@@ -115,6 +115,8 @@
         }
 
         //Buddy
+        
+
         $("#submit_travel").on('click', addNewTravel);
         $("#travel_type").click(chooseTravelType);
         $("#newTravelBtn").click(showTravelForm);
