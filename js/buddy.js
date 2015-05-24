@@ -43,22 +43,29 @@ function sendLoginInfo(userInfo) {
         // Handle any errors here.
     });
 }
+
 function afterLogin(kakao_userInfo) {
     $("#login_container").prepend('<img id="profil_img" src="' + kakao_userInfo.profile_image + '" class="img-circle profile">');
     $("#login_name").text(kakao_userInfo.nickname);
-    $("#login_name").css({"float": "left", "margin-left" : "-13px"});
+    $("#login_name").css({
+        "float": "left",
+        "margin-left": "-13px"
+    });
     $("#login_fade").css("display", "none");
     $("#login").css("display", "none");
     $("#login_name").attr("data-toggle", "dropdown").addClass('dropdown-toggle').append("<b class='caret'></b>");
     $("#login_container").append('<ul class="dropdown-menu"><li><a href="#">My Account</a></li><li class="divider"></li><li><a href="javascript:kakao_logout()">Logout</a></li></ul>');
-    if(isPressNewBtn) {
+    if (isPressNewBtn) {
         $('#createTravel').css('z-index', '1040');
     }
 }
 
 function afterLogout() {
     $("#login_name").text("로그인");
-    $("#login_name").css({"float": "", "margin-left" : "0px"});
+    $("#login_name").css({
+        "float": "",
+        "margin-left": "0px"
+    });
     $("#profil_img").remove();
     $("#login_name").removeAttr("data-toggle").removeClass('dropdown-toggle');
     $("b .caret").remove();
@@ -88,15 +95,15 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 function initialize() {
     var options = {
-            types: ['(cities)']
-        };
+        types: ['(cities)']
+    };
 
-        var input = document.getElementById('move_from');
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
+    var input = document.getElementById('move_from');
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
 }
 
 // Login window
-function popupLoginWindow () {
+function popupLoginWindow() {
     $("#login").css("display", "block");
     $("#login_fade").css("display", "block");
 
@@ -244,7 +251,7 @@ function returnTravelType(travelType) {
 var isLogin = false;
 var isPressNewBtn = false;
 var showTravelForm = function() {
-    if(isLogin) {
+    if (isLogin) {
         isPressNewBtn = true;
         $("#createTravel").toggle();
     } else {
@@ -286,14 +293,9 @@ function createNewObject(travel, count) {
 
     $("#accordion").prepend("<div id='object_" + count + "' class='panel panel-default " + panelStyle + "'></div>");
 
-    $("#object_" + count).append("<div class='panel-heading' role='tab' id='heading_" + count 
-        + "'><h4 class='panel-title'><a data-toggle='collapse' id='heading_t_" + count 
-        + "' class='clipped' data-parent='#accordion' href='#collapse_" + count 
-        + "' aria-expanded='false' aria-controls='collapse_" + count + "'></a></h4></div>");
+    $("#object_" + count).append("<div class='panel-heading' role='tab' id='heading_" + count + "'><h4 class='panel-title'><a data-toggle='collapse' id='heading_t_" + count + "' class='clipped' data-parent='#accordion' href='#collapse_" + count + "' aria-expanded='false' aria-controls='collapse_" + count + "'></a></h4></div>");
 
-    $("#object_" + count).append("<div id='collapse_" + count 
-        + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count 
-        + "'><div class='panel-body'>" + travel.comment + "</div></div>");
+    $("#object_" + count).append("<div id='collapse_" + count + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count + "'><div class='panel-body'>" + travel.comment + "</div></div>");
 
     var tmpKakaoThumbnail = "http://mud-kage.kakao.co.kr/14/dn/btqb4CAgAzI/RQ6IGbda4CN2krpdNJ5aOk/o.jpg";
 
@@ -360,13 +362,13 @@ function createNewObject(travel, count) {
 
     //add travel city_to
     if (travel.city_from !== null) {
-    //if (travel.hasOwnProperty('city_from')) {
+        //if (travel.hasOwnProperty('city_from')) {
         _object.append("<span id='_city_from' class='inner_text'>#" + travel.city_from + "</span>");
     }
 
     //add tour/trekking name
     if (travel.tour_name !== null) {
-    //if (travel.hasOwnProperty('tour_name')) {
+        //if (travel.hasOwnProperty('tour_name')) {
         _object.append("<span id='_tour_name' class='inner_text'>#" + travel.tour_name + "</span>");
     }
 
@@ -377,7 +379,7 @@ function createNewObject(travel, count) {
 
     //when_to
     if (travel.when_to !== null) {
-    //if (travel.hasOwnProperty('when_to')) {
+        //if (travel.hasOwnProperty('when_to')) {
         var tmp_to = travel.when_to.split("/");
         tmp_to = tmp_to[0] + "월" + tmp_to[1] + "일";
         _object.append("<span id='_when_to' class='inner_text inner_text_date'>" + tmp_from + " ~ " + tmp_to + "</span>");
@@ -436,13 +438,35 @@ function getTravelList() {
             viewMessage();*/
             console.log(result);
             numOfTravel = result.length;
-            for(var i = 0; i < numOfTravel; i ++) {
+            for (var i = 0; i < numOfTravel; i++) {
                 returnTravelType(result[i].type);
-                createNewObject(result[i],i+1);
+                createNewObject(result[i], i + 1);
             }
         },
-        error: function(a,b) {
-          console.log("error: " + a + b);
+        error: function(a, b) {
+            console.log("error: " + a + b);
         }
-      });
+    });
 }
+
+$("input#sendMail").click(function() {
+    var url = 'http://localhost:5000/sendMail';
+    deferred = $.post(url, {
+        name: $("#name2").val(),
+        from: $("#email2").val(),
+        message: $("#message2").val()
+    });
+    
+
+    deferred.success(function(e) {
+        console.log("Message from server : " + e);
+        /*$("#receiveMsg").text('Thank you! Message has been sent.');
+        event.preventDefault();*/
+    });
+
+    deferred.error(function(e) {
+        // Handle any errors here.
+        /*$("#receiveMsg").text('Sorry! Message was not sent.');
+        event.preventDefault();*/
+    });
+});

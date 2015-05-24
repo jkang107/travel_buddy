@@ -115,7 +115,7 @@
         }
 
         //Buddy
-        
+
 
         $("#submit_travel").on('click', addNewTravel);
         $("#travel_type").click(chooseTravelType);
@@ -139,5 +139,8 @@
             $("#kakao-login-btn").trigger('click');
         });
         getTravelList();
+
+        
+
     }); // End document ready
 })(this.jQuery);
