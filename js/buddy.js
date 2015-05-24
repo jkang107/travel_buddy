@@ -1,3 +1,6 @@
+//var preURL = "http://localhost:5000";
+var preURL = "http://amigo-server-.herokuapp.com";
+
 // kakaotalk
 
 // KAKAO TALK JavaScript Key
@@ -11,12 +14,9 @@ Kakao.Auth.createLoginButton({
         Kakao.API.request({
             url: '/v1/user/me',
             success: function(res) {
-                //$("#userId").text("ID : " + res.id);
-                //$("#profil_img").attr("src", res.properties.thumbnail_image);
                 sendLoginInfo(res);
                 isLogin = true;
-                afterLogin(res.properties);
-                //$("#profile_image").attr("src", res.properties.profile_image);
+                afterLogin(res);
             },
             fail: function(error) {
                 alert(JSON.stringify(error));
@@ -29,7 +29,8 @@ Kakao.Auth.createLoginButton({
 });
 
 function sendLoginInfo(userInfo) {
-    var url = "http://localhost:5000/sendLoginInfo";
+    var url = preURL + "sendLoginInfo";
+
     response = $.post(url, {
         userInfo: userInfo
     });
@@ -45,8 +46,8 @@ function sendLoginInfo(userInfo) {
 }
 
 function afterLogin(kakao_userInfo) {
-    $("#login_container").prepend('<img id="profil_img" src="' + kakao_userInfo.profile_image + '" class="img-circle profile">');
-    $("#login_name").text(kakao_userInfo.nickname);
+    $("#login_container").prepend('<img id="profil_img" src="' + kakao_userInfo.properties.thumbnail_image + '" class="img-circle profile">');
+    $("#login_name").text(kakao_userInfo.properties.nickname);
     $("#login_name").css({
         "float": "left",
         "margin-left": "-13px"
@@ -54,10 +55,14 @@ function afterLogin(kakao_userInfo) {
     $("#login_fade").css("display", "none");
     $("#login").css("display", "none");
     $("#login_name").attr("data-toggle", "dropdown").addClass('dropdown-toggle').append("<b class='caret'></b>");
-    $("#login_container").append('<ul class="dropdown-menu"><li><a href="#">My Account</a></li><li class="divider"></li><li><a href="javascript:kakao_logout()">Logout</a></li></ul>');
+    $("#login_container").append('<ul class="dropdown-menu"><li><a href="#">내가 올린 글 보기</a></li><li class="divider"></li><li><a href="javascript:kakao_logout()">Logout</a></li></ul>');
     if (isPressNewBtn) {
         $('#createTravel').css('z-index', '1040');
     }
+
+    localStorage.setItem('id', kakao_userInfo.id);
+    localStorage.setItem('thumbnail', kakao_userInfo.properties.thumbnail_image);
+    localStorage.setItem('nickname', kakao_userInfo.properties.nickname);
 }
 
 function afterLogout() {
@@ -70,6 +75,9 @@ function afterLogout() {
     $("#login_name").removeAttr("data-toggle").removeClass('dropdown-toggle');
     $("b .caret").remove();
     $(".dropdown-menu").remove();
+    localStorage.removeItem("id");
+    localStorage.removeItem("thumbnail");
+    localStorage.removeItem("nickname");
 }
 
 function loginWithKakao() {
@@ -140,14 +148,11 @@ var chooseTravelType = function() {
 
 var addNewTravel = function() {
     $('#createTravel').modal('hide');
-    var countryArr = [];
-    $("#travel_country").find(".active").each(function() {
-        countryArr.push($(this).text());
-    });
+    
     var travelType = $("#travel_type").find(".active").get(0).id;
 
     var travelInfo = {
-        userId: "22044723",
+        userId: localStorage.getItem("id"),
         travel_type: travelType,
         sex: $("#client_gender").find(".active").children().get(0).id,
         user_age: $("#client_age").find(".active").children().get(0).id,
@@ -159,28 +164,42 @@ var addNewTravel = function() {
         city_to: null,
         transportation: null,
         tour_name: null,
-        comment: null
+        comment: null,
+        thumbnail: localStorage.getItem("thumbnail")
     };
 
-    //var travelInfo;
-
-
-    //returnTravelType(travelType);
     switch (travelType) {
         case "travelWith":
-            travelInfo = {
+            var countryArr = [];
+            $("#travel_country").find(".active").each(function() {
+                countryArr.push($(this).text());
+            });
+            travelInfo['travel_type'] = travelType;
+            travelInfo['when_from'] = $("#travel_date_from").val();
+            travelInfo['when_to'] = $("#travel_date_to").val();
+            travelInfo['country_from'] = countryArr;
+            travelInfo['comment'] = $("#travel_detail1").val();
+            /*travelInfo = {
                 travel_type: travelType,
                 when_from: $("#travel_date_from").val(),
                 when_to: $("#travel_date_to").val(),
                 country_from: countryArr,
                 comment: $("#travel_detail1").val()
-            };
+            };*/
             panelStyle = "panel-success";
             titleImage = "travel_man_64.png";
-
             break;
         case "moveWith":
-            travelInfo = {
+            travelInfo['travel_type'] = travelType;
+            travelInfo['when_from'] = $("#move_when").val();
+            travelInfo['country_from'] = $("#move_from_country option:selected").val();
+            travelInfo['city_from'] = $("#move_from").val();
+            travelInfo['country_to'] = $("#move_to_country option:selected").val();
+            travelInfo['city_to'] = $("#move_to").val();
+            travelInfo['transportation'] = $("#transportation_button").find(".active").children().get(0).id;
+            travelInfo['comment'] = $("#travel_detail2").val();
+
+            /*travelInfo = {
                 travel_type: travelType,
                 when_from: $("#move_when").val(),
                 country_from: $("#move_from_country option:selected").val(),
@@ -189,42 +208,51 @@ var addNewTravel = function() {
                 city_to: $("#move_to").val(),
                 transportation: $("#transportation_button").find(".active").children().get(0).id,
                 comment: $("#travel_detail2").val()
-            };
+            };*/
             panelStyle = "panel-info";
             titleImage = "taxi_64.png";
-
             break;
         case "tourWith":
-            travelInfo = {
+            travelInfo['travel_type'] = travelType;
+            travelInfo['when_from'] = $("#tour_date_from").val();
+            travelInfo['when_to'] = $("#tour_date_to").val();
+            travelInfo['country_from'] = $("#tour_contry option:selected").val();
+            travelInfo['tour_name'] = $("#tour_name").val();
+            travelInfo['comment'] = $("#travel_detail3").val();
+
+            /*travelInfo = {
                 travel_type: travelType,
                 when_from: $("#tour_date_from").val(),
                 when_to: $("#tour_date_to").val(),
                 country_from: $("#tour_contry option:selected").val(),
                 tour_name: $("#tour_name").val(),
                 comment: $("#travel_detail3").val()
-            };
+            };*/
             panelStyle = "panel-warning";
             titleImage = "biking_64.png";
-
             break;
         case "foodWith":
-            travelInfo = {
+            travelInfo['travel_type'] = travelType;
+            travelInfo['when_from'] = $("#food_when").val();
+            travelInfo['country_from'] = $("#food_country option:selected").val();
+            travelInfo['city_from'] = $("#food_city").val();
+            travelInfo['comment'] = $("#travel_detail4").val();
+
+            /*travelInfo = {
                 travel_type: travelType,
                 when_from: $("#food_when").val(),
                 country_from: $("#food_country option:selected").val(),
                 city_from: $("#food_city").val(),
                 comment: $("#travel_detail4").val()
-            };
+            };*/
             panelStyle = "panel-danger";
             titleImage = "food_64.png";
-
             break;
 
     }
 
     createNewTravel(travelInfo);
     console.log("==== Create new travel! ====");
-    //$("#createTravel").css("display", "none");
 };
 
 function returnTravelType(travelType) {
@@ -259,7 +287,6 @@ var showTravelForm = function() {
         isPressNewBtn = true;
         popupLoginWindow();
     }
-
 };
 
 $("#login_fade").click(function() {
@@ -272,19 +299,17 @@ $("#login_close_btn").click(function() {
     $("#login").css("display", "none");
 });
 
-var Travel = function(user, travelInfo) {
-    /*this.type = type;
-    this.gender = gender;
-    this.age = age;*/
+/*var Travel = function(user, travelInfo) {
+
     this.id = user.userId;
     this.info = travelInfo;
-};
+};*/
 
-function createNewTravel(user, travel) {
-    var newUser = new Travel(user, travel);
+function createNewTravel(travel) {
+    //var newUser = new Travel(user, travel);
     stampCurrentTime();
-    sendToServer(user, travel);
-    createNewObject(user, travel, numOfTravel);
+    sendToServer(travel);
+    createNewObject(travel, numOfTravel);
 
 }
 var numOfTravel = 0;
@@ -297,7 +322,7 @@ function createNewObject(travel, count) {
 
     $("#object_" + count).append("<div id='collapse_" + count + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count + "'><div class='panel-body'>" + travel.comment + "</div></div>");
 
-    var tmpKakaoThumbnail = "http://mud-kage.kakao.co.kr/14/dn/btqb4CAgAzI/RQ6IGbda4CN2krpdNJ5aOk/o.jpg";
+    var tmpKakaoThumbnail = localStorage.getItem("thumbnail");
 
     var _object = $("#heading_t_" + count);
 
@@ -333,7 +358,7 @@ function createNewObject(travel, count) {
 
     //transportation
     //if (travel.hasOwnProperty('transportation')) {
-    if (travel.transportation != null) {
+    if (travel.transportation !== null) {
         var tmp_trans = travel.transportation;
         switch (tmp_trans) {
             case "bus":
@@ -406,10 +431,10 @@ function stampCurrentTime() {
 
 }
 
-function sendToServer(userInfo, travelInfo) {
-    var url = "http://localhost:5000/sendTravelInfo";
+function sendToServer(travelInfo) {
+    var url = preURL + "sendTravelInfo";
     deferred = $.post(url, {
-        userInfo: userInfo,
+        /*userInfo: userInfo,*/
         travelInfo: travelInfo,
         time: currentTime
     });
@@ -426,7 +451,7 @@ function sendToServer(userInfo, travelInfo) {
 }
 
 function getTravelList() {
-    var url = "http://localhost:5000/getTravelList";
+    var url = preURL + "getTravelList";
     $.ajax({
         type: 'GET',
         url: url,
@@ -450,7 +475,7 @@ function getTravelList() {
 }
 
 $("input#sendMail").click(function() {
-    var url = 'http://localhost:5000/sendMail';
+    var url = preURL + 'sendMail';
     deferred = $.post(url, {
         name: $("#name2").val(),
         from: $("#email2").val(),
