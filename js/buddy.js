@@ -29,7 +29,7 @@ Kakao.Auth.createLoginButton({
 });
 
 function sendLoginInfo(userInfo) {
-    var url = preURL + "sendLoginInfo";
+    var url = preURL + "/sendLoginInfo";
 
     response = $.post(url, {
         userInfo: userInfo
@@ -432,7 +432,7 @@ function stampCurrentTime() {
 }
 
 function sendToServer(travelInfo) {
-    var url = preURL + "sendTravelInfo";
+    var url = preURL + "/sendTravelInfo";
     deferred = $.post(url, {
         /*userInfo: userInfo,*/
         travelInfo: travelInfo,
@@ -451,7 +451,7 @@ function sendToServer(travelInfo) {
 }
 
 function getTravelList() {
-    var url = preURL + "getTravelList";
+    var url = preURL + "/getTravelList";
     $.ajax({
         type: 'GET',
         url: url,
@@ -475,7 +475,7 @@ function getTravelList() {
 }
 
 $("input#sendMail").click(function() {
-    var url = preURL + 'sendMail';
+    var url = preURL + '/sendMail';
     deferred = $.post(url, {
         name: $("#name2").val(),
         from: $("#email2").val(),
