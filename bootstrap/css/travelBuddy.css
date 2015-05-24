@@ -42,7 +42,7 @@ a:hover, a:focus { text-decoration: none; }
   border-radius: 25px;
   color: #445448;
   /*font-size: 80%;*/
-  line-height: 50px;
+  line-height: 40px;
   vertical-align: middle;
   margin-right: 4px;
 }
@@ -126,4 +126,10 @@ a:hover, a:focus { text-decoration: none; }
 .login_close {
   float: right;
   margin-top: 30px;
+}
+
+.clipped {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

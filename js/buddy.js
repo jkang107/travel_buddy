@@ -139,22 +139,32 @@ var addNewTravel = function() {
     });
     var travelType = $("#travel_type").find(".active").get(0).id;
 
-    var userInfo = {
+    var travelInfo = {
         userId: "22044723",
         travel_type: travelType,
-        user_gender: $("#client_gender").find(".active").children().get(0).id,
-        user_age: $("#client_age").find(".active").children().get(0).id
+        sex: $("#client_gender").find(".active").children().get(0).id,
+        user_age: $("#client_age").find(".active").children().get(0).id,
+        when_from: null,
+        when_to: null,
+        country_from: null,
+        city_from: null,
+        country_to: null,
+        city_to: null,
+        transportation: null,
+        tour_name: null,
+        comment: null
     };
 
-    var travelInfo;
+    //var travelInfo;
 
 
+    //returnTravelType(travelType);
     switch (travelType) {
         case "travelWith":
             travelInfo = {
                 travel_type: travelType,
-                date_from: $("#travel_date_from").val(),
-                date_to: $("#travel_date_to").val(),
+                when_from: $("#travel_date_from").val(),
+                when_to: $("#travel_date_to").val(),
                 country_from: countryArr,
                 comment: $("#travel_detail1").val()
             };
@@ -165,7 +175,7 @@ var addNewTravel = function() {
         case "moveWith":
             travelInfo = {
                 travel_type: travelType,
-                date_from: $("#move_when").val(),
+                when_from: $("#move_when").val(),
                 country_from: $("#move_from_country option:selected").val(),
                 city_from: $("#move_from").val(),
                 country_to: $("#move_to_country option:selected").val(),
@@ -180,8 +190,8 @@ var addNewTravel = function() {
         case "tourWith":
             travelInfo = {
                 travel_type: travelType,
-                date_from: $("#tour_date_from").val(),
-                date_to: $("#tour_date_to").val(),
+                when_from: $("#tour_date_from").val(),
+                when_to: $("#tour_date_to").val(),
                 country_from: $("#tour_contry option:selected").val(),
                 tour_name: $("#tour_name").val(),
                 comment: $("#travel_detail3").val()
@@ -193,7 +203,7 @@ var addNewTravel = function() {
         case "foodWith":
             travelInfo = {
                 travel_type: travelType,
-                date_from: $("#food_when").val(),
+                when_from: $("#food_when").val(),
                 country_from: $("#food_country option:selected").val(),
                 city_from: $("#food_city").val(),
                 comment: $("#travel_detail4").val()
@@ -205,10 +215,31 @@ var addNewTravel = function() {
 
     }
 
-    createNewTravel(userInfo, travelInfo);
+    createNewTravel(travelInfo);
     console.log("==== Create new travel! ====");
     //$("#createTravel").css("display", "none");
 };
+
+function returnTravelType(travelType) {
+    switch (travelType) {
+        case "travelWith":
+            panelStyle = "panel-success";
+            titleImage = "travel_man_64.png";
+            break;
+        case "moveWith":
+            panelStyle = "panel-info";
+            titleImage = "taxi_64.png";
+            break;
+        case "tourWith":
+            panelStyle = "panel-warning";
+            titleImage = "biking_64.png";
+            break;
+        case "foodWith":
+            panelStyle = "panel-danger";
+            titleImage = "food_64.png";
+            break;
+    }
+}
 
 var isLogin = false;
 var isPressNewBtn = false;
@@ -222,7 +253,6 @@ var showTravelForm = function() {
         popupLoginWindow();
     }
 
-    //$("#container").css("opacity", "0.7");
 };
 
 $("#login_fade").click(function() {
@@ -234,6 +264,7 @@ $("#login_close_btn").click(function() {
     $("#login_fade").css("display", "none");
     $("#login").css("display", "none");
 });
+
 var Travel = function(user, travelInfo) {
     /*this.type = type;
     this.gender = gender;
@@ -246,31 +277,36 @@ function createNewTravel(user, travel) {
     var newUser = new Travel(user, travel);
     stampCurrentTime();
     sendToServer(user, travel);
-    createNewObject(user, travel);
+    createNewObject(user, travel, numOfTravel);
 
 }
-var count = 0;
+var numOfTravel = 0;
 
-function createNewObject(user, travel) {
+function createNewObject(travel, count) {
 
     $("#accordion").prepend("<div id='object_" + count + "' class='panel panel-default " + panelStyle + "'></div>");
 
-    $("#object_" + count).append("<div class='panel-heading' role='tab' id='heading_" + count + "'><h4 class='panel-title'><a data-toggle='collapse' id='heading_t_" + count + "' data-parent='#accordion' href='#collapse_" + count + "' aria-expanded='false' aria-controls='collapse_" + count + "'></a></h4></div>");
+    $("#object_" + count).append("<div class='panel-heading' role='tab' id='heading_" + count 
+        + "'><h4 class='panel-title'><a data-toggle='collapse' id='heading_t_" + count 
+        + "' class='clipped' data-parent='#accordion' href='#collapse_" + count 
+        + "' aria-expanded='false' aria-controls='collapse_" + count + "'></a></h4></div>");
 
-    $("#object_" + count).append("<div id='collapse_" + count + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count + "'><div class='panel-body'>" + travel.comment + "</div></div>");
+    $("#object_" + count).append("<div id='collapse_" + count 
+        + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count 
+        + "'><div class='panel-body'>" + travel.comment + "</div></div>");
 
     var tmpKakaoThumbnail = "http://mud-kage.kakao.co.kr/14/dn/btqb4CAgAzI/RQ6IGbda4CN2krpdNJ5aOk/o.jpg";
 
     var _object = $("#heading_t_" + count);
 
     //add kakaotalk
-    _object.append("<img src='" + tmpKakaoThumbnail + "' class='img-circle inner_list' alt='kakaotalk thumbnail' width='50' height='50'>");
+    _object.append("<img src='" + tmpKakaoThumbnail + "' class='img-circle inner_list' alt='kakaotalk thumbnail' width='40' height='40'>");
 
     //add travel type
-    _object.append("<img src='./bootstrap/images/" + titleImage + "' class='inner_list' alt='travel' width='50' height='50'>");
+    _object.append("<img src='./bootstrap/images/" + titleImage + "' class='inner_list' alt='travel' width='40' height='40'>");
 
     //add gender
-    var tmp_gender = user.user_gender;
+    var tmp_gender = travel.sex;
     _object.append("<span id='_gender' class='inner_text'></span>");
     //var tmp_gender_class;
     if (tmp_gender == "man") {
@@ -294,7 +330,8 @@ function createNewObject(user, travel) {
 
 
     //transportation
-    if (travel.hasOwnProperty('transportation')) {
+    //if (travel.hasOwnProperty('transportation')) {
+    if (travel.transportation != null) {
         var tmp_trans = travel.transportation;
         switch (tmp_trans) {
             case "bus":
@@ -322,27 +359,30 @@ function createNewObject(user, travel) {
     }
 
     //add travel city_to
-    if (travel.hasOwnProperty('city_from')) {
+    if (travel.city_from !== null) {
+    //if (travel.hasOwnProperty('city_from')) {
         _object.append("<span id='_city_from' class='inner_text'>#" + travel.city_from + "</span>");
     }
 
     //add tour/trekking name
-    if (travel.hasOwnProperty('tour_name')) {
+    if (travel.tour_name !== null) {
+    //if (travel.hasOwnProperty('tour_name')) {
         _object.append("<span id='_tour_name' class='inner_text'>#" + travel.tour_name + "</span>");
     }
 
     //add travel date
-    //date_from
-    var tmp_from = travel.date_from.split("/");
+    //when_from
+    var tmp_from = travel.when_from.split("/");
     tmp_from = tmp_from[0] + "월" + tmp_from[1] + "일";
 
-    //date_to
-    if (travel.hasOwnProperty('date_to')) {
-        var tmp_to = travel.date_to.split("/");
+    //when_to
+    if (travel.when_to !== null) {
+    //if (travel.hasOwnProperty('when_to')) {
+        var tmp_to = travel.when_to.split("/");
         tmp_to = tmp_to[0] + "월" + tmp_to[1] + "일";
-        _object.append("<span id='_date_to' class='inner_text inner_text_date'>" + tmp_from + " ~ " + tmp_to + "</span>");
+        _object.append("<span id='_when_to' class='inner_text inner_text_date'>" + tmp_from + " ~ " + tmp_to + "</span>");
     } else {
-        _object.append("<span id='_date_to' class='inner_text inner_text_date'>" + tmp_from + "</span>");
+        _object.append("<span id='_when_to' class='inner_text inner_text_date'>" + tmp_from + "</span>");
     }
 
 
@@ -395,6 +435,11 @@ function getTravelList() {
             console.time("success" + messageJson);
             viewMessage();*/
             console.log(result);
+            numOfTravel = result.length;
+            for(var i = 0; i < numOfTravel; i ++) {
+                returnTravelType(result[i].type);
+                createNewObject(result[i],i+1);
+            }
         },
         error: function(a,b) {
           console.log("error: " + a + b);
