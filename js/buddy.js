@@ -326,12 +326,12 @@ function createNewObject(travel, count) {
 
     $("#object_" + count).append("<div id='collapse_" + count + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count + "'><div class='panel-body'>" + travel.comment + "</div></div>");
 
-    var tmpKakaoThumbnail = localStorage.getItem("thumbnail");
+    //var tmpKakaoThumbnail = localStorage.getItem("thumbnail");
 
     var _object = $("#heading_t_" + count);
 
     //add kakaotalk
-    _object.append("<img src='" + tmpKakaoThumbnail + "' class='img-circle inner_list' alt='kakaotalk thumbnail' width='40' height='40'>");
+    _object.append("<img src='" + travel.kakao_thumbnail + "' class='img-circle inner_list' alt='kakaotalk thumbnail' width='40' height='40'>");
 
     //add travel type
     _object.append("<img src='./bootstrap/images/" + titleImage + "' class='inner_list' alt='travel' width='40' height='40'>");
