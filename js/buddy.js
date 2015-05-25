@@ -356,7 +356,7 @@ function createNewObject(travel, count) {
     $("#_gender").text(tmp_gender).addClass("inner_text_gender");
 
     //add age
-    var tmp_age = $("#client_age").find(".active").children().get(0).id.split("_")[1] + "대";
+    var tmp_age = travel.age.split("_")[1] + "대";
     _object.append("<span id='_age' class='inner_text inner_text_gender'>" + tmp_age + "</span>");
 
 
