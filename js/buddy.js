@@ -1,4 +1,8 @@
-var preURL = process.env.SERVER_URL || "http://localhost:5000";
+var preURL = window.location.href.indexOf('8080') == -1 
+    ? "http://amigo-server-.herokuapp.com"
+    : "http://localhost:5000";
+
+
 //var preURL = "http://amigo-server-.herokuapp.com";
 
 // kakaotalk
