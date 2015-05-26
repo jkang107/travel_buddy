@@ -2,9 +2,6 @@ var preURL = window.location.href.indexOf('8080') == -1
     ? "http://amigo-server-.herokuapp.com"
     : "http://localhost:5000";
 
-
-//var preURL = "http://amigo-server-.herokuapp.com";
-
 // kakaotalk
 
 // KAKAO TALK JavaScript Key
@@ -49,6 +46,11 @@ function sendLoginInfo(userInfo) {
     });
 }
 
+/*$("div#login_container div.btn-group > a.dropdown-toggle, .dropdown-menu li a").click(function(e) {
+    e.stopPropagation();
+    $('.dropdown-menu').toggle();
+});​*/
+
 function afterLogin(kakao_userInfo) {
     $("#login_container").prepend('<img id="profil_img" src="' + kakao_userInfo.properties.thumbnail_image + '" class="img-circle profile">');
     $("#login_name").text(kakao_userInfo.properties.nickname);
@@ -58,8 +60,9 @@ function afterLogin(kakao_userInfo) {
     });
     $("#login_fade").css("display", "none");
     $("#login").css("display", "none");
+    $("#login_container").addClass('dropdown dropdown-btn');
     $("#login_name").attr("data-toggle", "dropdown").addClass('dropdown-toggle').append("<b class='caret'></b>");
-    $("#login_container").append('<ul class="dropdown-menu"><li><a href="#">내가 올린 글 보기</a></li><li class="divider"></li><li><a href="javascript:kakao_logout()">Logout</a></li></ul>');
+    $("#login_container").append('<ul class="dropdown-menu"><li><a onclick="javascript:viewMyAccount()">내가 올린 글 보기</a></li><li class="divider"></li><li><a onclick="javascript:kakao_logout()">Logout</a></li></ul>');
     if (isPressNewBtn) {
         $('#createTravel').css('z-index', '1040');
     }
@@ -67,9 +70,11 @@ function afterLogin(kakao_userInfo) {
     localStorage.setItem('id', kakao_userInfo.id);
     localStorage.setItem('thumbnail', kakao_userInfo.properties.thumbnail_image);
     localStorage.setItem('nickname', kakao_userInfo.properties.nickname);
+
 }
 
 function afterLogout() {
+    //$('.dropdown-menu').toggle();
     $("#login_name").text("로그인");
     $("#login_name").css({
         "float": "",
@@ -84,6 +89,9 @@ function afterLogout() {
     localStorage.removeItem("nickname");
 }
 
+function viewMyAccount() {
+    $('.dropdown-menu').dropdown('toggle');
+}
 function loginWithKakao() {
     /*// 로그인 창을 띄웁니다.
     Kakao.Auth.login({
@@ -101,6 +109,8 @@ function kakao_logout() {
     Kakao.Auth.logout();
     isLogin = false;
     afterLogout();
+    //$('.dropdown-menu').dropdown('toggle');
+    /*return false;*/
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -115,10 +125,12 @@ function initialize() {
 }
 
 // Login window
-function popupLoginWindow() {
-    $("#login").css("display", "block");
-    $("#login_fade").css("display", "block");
 
+function popupLoginWindow() {
+    if(!isLogin) {
+       $("#login").css("display", "block");
+        $("#login_fade").css("display", "block"); 
+    }
 }
 
 var containerNum = 1;
@@ -159,7 +171,7 @@ var addNewTravel = function() {
         userId: localStorage.getItem("id"),
         travel_type: travelType,
         sex: $("#client_gender").find(".active").children().get(0).id,
-        user_age: $("#client_age").find(".active").children().get(0).id,
+        age: $("#client_age").find(".active").children().get(0).id,
         when_from: null,
         when_to: null,
         country_from: null,
@@ -169,7 +181,7 @@ var addNewTravel = function() {
         transportation: null,
         tour_name: null,
         comment: null,
-        thumbnail: localStorage.getItem("thumbnail")
+        kakao_thumbnail: localStorage.getItem("thumbnail")
     };
 
     switch (travelType) {
@@ -183,13 +195,7 @@ var addNewTravel = function() {
             travelInfo['when_to'] = $("#travel_date_to").val();
             travelInfo['country_from'] = countryArr;
             travelInfo['comment'] = $("#travel_detail1").val();
-            /*travelInfo = {
-                travel_type: travelType,
-                when_from: $("#travel_date_from").val(),
-                when_to: $("#travel_date_to").val(),
-                country_from: countryArr,
-                comment: $("#travel_detail1").val()
-            };*/
+
             panelStyle = "panel-success";
             titleImage = "travel_man_64.png";
             break;
@@ -203,16 +209,6 @@ var addNewTravel = function() {
             travelInfo['transportation'] = $("#transportation_button").find(".active").children().get(0).id;
             travelInfo['comment'] = $("#travel_detail2").val();
 
-            /*travelInfo = {
-                travel_type: travelType,
-                when_from: $("#move_when").val(),
-                country_from: $("#move_from_country option:selected").val(),
-                city_from: $("#move_from").val(),
-                country_to: $("#move_to_country option:selected").val(),
-                city_to: $("#move_to").val(),
-                transportation: $("#transportation_button").find(".active").children().get(0).id,
-                comment: $("#travel_detail2").val()
-            };*/
             panelStyle = "panel-info";
             titleImage = "taxi_64.png";
             break;
@@ -224,14 +220,6 @@ var addNewTravel = function() {
             travelInfo['tour_name'] = $("#tour_name").val();
             travelInfo['comment'] = $("#travel_detail3").val();
 
-            /*travelInfo = {
-                travel_type: travelType,
-                when_from: $("#tour_date_from").val(),
-                when_to: $("#tour_date_to").val(),
-                country_from: $("#tour_contry option:selected").val(),
-                tour_name: $("#tour_name").val(),
-                comment: $("#travel_detail3").val()
-            };*/
             panelStyle = "panel-warning";
             titleImage = "biking_64.png";
             break;
@@ -242,13 +230,6 @@ var addNewTravel = function() {
             travelInfo['city_from'] = $("#food_city").val();
             travelInfo['comment'] = $("#travel_detail4").val();
 
-            /*travelInfo = {
-                travel_type: travelType,
-                when_from: $("#food_when").val(),
-                country_from: $("#food_country option:selected").val(),
-                city_from: $("#food_city").val(),
-                comment: $("#travel_detail4").val()
-            };*/
             panelStyle = "panel-danger";
             titleImage = "food_64.png";
             break;
@@ -309,12 +290,12 @@ $("#login_close_btn").click(function() {
     this.info = travelInfo;
 };*/
 
+var tmp_new_travel;
 function createNewTravel(travel) {
     //var newUser = new Travel(user, travel);
+    tmp_new_travel = travel;
     stampCurrentTime();
     sendToServer(travel);
-    createNewObject(travel, numOfTravel);
-
 }
 var numOfTravel = 0;
 
@@ -325,8 +306,6 @@ function createNewObject(travel, count) {
     $("#object_" + count).append("<div class='panel-heading' role='tab' id='heading_" + count + "'><h4 class='panel-title'><a data-toggle='collapse' id='heading_t_" + count + "' class='clipped' data-parent='#accordion' href='#collapse_" + count + "' aria-expanded='false' aria-controls='collapse_" + count + "'></a></h4></div>");
 
     $("#object_" + count).append("<div id='collapse_" + count + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='collapse_" + count + "'><div class='panel-body'>" + travel.comment + "</div></div>");
-
-    //var tmpKakaoThumbnail = localStorage.getItem("thumbnail");
 
     var _object = $("#heading_t_" + count);
 
@@ -361,7 +340,6 @@ function createNewObject(travel, count) {
 
 
     //transportation
-    //if (travel.hasOwnProperty('transportation')) {
     if (travel.transportation !== null) {
         var tmp_trans = travel.transportation;
         switch (tmp_trans) {
@@ -391,13 +369,11 @@ function createNewObject(travel, count) {
 
     //add travel city_to
     if (travel.city_from !== null) {
-        //if (travel.hasOwnProperty('city_from')) {
         _object.append("<span id='_city_from' class='inner_text'>#" + travel.city_from + "</span>");
     }
 
     //add tour/trekking name
     if (travel.tour_name !== null) {
-        //if (travel.hasOwnProperty('tour_name')) {
         _object.append("<span id='_tour_name' class='inner_text'>#" + travel.tour_name + "</span>");
     }
 
@@ -408,7 +384,6 @@ function createNewObject(travel, count) {
 
     //when_to
     if (travel.when_to !== null) {
-        //if (travel.hasOwnProperty('when_to')) {
         var tmp_to = travel.when_to.split("/");
         tmp_to = tmp_to[0] + "월" + tmp_to[1] + "일";
         _object.append("<span id='_when_to' class='inner_text inner_text_date'>" + tmp_from + " ~ " + tmp_to + "</span>");
@@ -444,11 +419,12 @@ function sendToServer(travelInfo) {
     });
 
     deferred.success(function(e) {
-        console.log("Message from server : " + e);
-
+        console.log("Success Message from server : " + e);
+        createNewObject(tmp_new_travel, numOfTravel);
     });
 
     deferred.error(function(e) {
+        console.log("Error Message from server : " + e);
         // Handle any errors here.
     });
 
@@ -459,12 +435,7 @@ function getTravelList() {
     $.ajax({
         type: 'GET',
         url: url,
-        //url: "http://localhost:5000/getMessages",
         success: function(result) {
-            /*var newStr = "[" + result.replace(/}{/gi, '},{') + "]";
-            messageJson = JSON.parse(newStr);
-            console.time("success" + messageJson);
-            viewMessage();*/
             console.log(result);
             numOfTravel = result.length;
             for (var i = 0; i < numOfTravel; i++) {

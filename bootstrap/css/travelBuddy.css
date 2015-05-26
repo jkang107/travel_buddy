@@ -133,3 +133,9 @@ a:hover, a:focus { text-decoration: none; }
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+@media (max-width: 767px) {
+  #profil_img {
+    margin-top: 0px;
+  }
+}

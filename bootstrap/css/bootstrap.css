@@ -4035,8 +4035,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (max-width: 767px) {
   .navbar-nav .open .dropdown-menu {
     position: static;
-    float: none;
-    width: auto;
+    /* float: none; */ /* (로그인)이름 아래로 메뉴가 펼쳐지게 되는것보다 왼편에 나오는게 나음.*/
+    /* width: auto; */ /*드롭메뉴의 divider가 너무 길게나옴.*/
+    width: 30%;
     margin-top: 0;
     background-color: transparent;
     border: 0;
@@ -4250,11 +4251,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #777;
+    /* color: #777; */ /*모바일 버전에서 로그인dropdown메뉴의 글씨 색깔이 회색일 경우 잘 안보여서*/
+    color: #FFE5CC;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #333;
+    /* color: #333; */
+    color: white;
     background-color: transparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,

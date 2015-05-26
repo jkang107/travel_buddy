@@ -724,3 +724,49 @@ textarea {
 	-webkit-transform: scale(1);
 	transform: scale(1);
 }
+
+/* screen
+----------------------------------------------------------------------------- */
+
+/* @media (max-width: @screen-sm) {
+    .banner-caption h1{font-size: 40px;}
+    .banner-caption {
+    	top: 25%;
+    }
+} */
+
+/* @media (max-width: @screen-sm) {
+    body{font-size: 14px;}
+} */
+
+/* @media (min-width:768px) {
+	.main-navigation .navbar-default .navbar-nav > li > a {
+		padding-top: 30px;
+		padding-bottom: 30px;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		-ms-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+	}
+}
+@media (min-width:768px) and (max-width:991px) {
+	.main-navigation .container-fluid {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.navbar-nav {
+		float: left !important;
+	}
+} */
+@media (max-width:767px) {
+	.banner-caption h1{
+		font-size: 30px;
+	}
+    .banner-caption {
+    	top: 30%;
+    }
+    #navbar-collapse-1{
+    	background-color: black;
+    }
+}
