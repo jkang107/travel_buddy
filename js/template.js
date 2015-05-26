@@ -141,9 +141,9 @@
         getTravelList();
 
         $('.navbar-collapse ul li a:not(.dropdown-toggle)').bind('click touchstart', function () {
-                if(event.target.className != "dropdown-toggle") {
-                    $('.navbar-toggle:visible').click();
-                }
+            if(event.target.className != "dropdown-toggle" && event.target.id != "findBuddy") {
+                $('.navbar-toggle:visible').click();
+            }
         });
 
     }); // End document ready
