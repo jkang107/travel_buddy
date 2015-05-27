@@ -766,13 +766,13 @@ textarea {
     	background-color: black;
     }
     .panel-title img{
-    	width:30px;
-    	height: 30px;
+    	width:35px;
+    	height: 35px;
     	margin-right: 8px;
     }
     .panel-title span {
-    	line-height: 30px;
-    	font-size: 70%;
+    	line-height: 35px;
+    	font-size: 85%;
     }
     .panel-title a {
     	padding: 8px 25px 7px 10px;
