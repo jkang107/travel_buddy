@@ -128,7 +128,8 @@
 
         $('.datepicker-container-range .input-daterange').datepicker({
             todayBtn: true,
-            todayHighlight: true
+            todayHighlight: true,
+            autoclose: true
         });
 
         $('.datepicker-container input').datepicker({
