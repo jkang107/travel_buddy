@@ -786,4 +786,7 @@ textarea {
 	.large {
 		font-size: 15px;
 	}
+	#travelList_container {
+		padding: 0px;
+	}
 }	
