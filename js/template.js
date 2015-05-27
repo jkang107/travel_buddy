@@ -52,8 +52,13 @@
                     var target = $(this.hash);
                     target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                     if (target.length) {
+                        var screenWidth = $(window).width();
+                        var scrollLenght = 151;
+                        if(screenWidth < 767) {
+                            scrollLenght = scrollLenght - 72;
+                        }
                         $('html,body').animate({
-                            scrollTop: target.offset().top - 151
+                            scrollTop: target.offset().top - scrollLenght
                         }, 1000);
                         return false;
                     }
@@ -117,9 +122,9 @@
         //Buddy
 
 
-        $("#submit_travel").on('click', addNewTravel);
-        $("#travel_type").click(chooseTravelType);
-        $("#newTravelBtn").click(showTravelForm);
+        $("#submit_travel").on('click touchstart', addNewTravel);
+        $("#travel_type").on('click touchstart',chooseTravelType);
+        $("#newTravelBtn").on('click touchstart',showTravelForm);
 
         $('.datepicker-container-range .input-daterange').datepicker({
             todayBtn: true,
@@ -131,18 +136,23 @@
             todayHighlight: true
         });
 
-        $("#findBuddy").click(function() {
+        $("#findBuddy").on('click touchstart',function() {
             $("#viewList").trigger("click");
         });
 
-        $("#kakaoLogin").click(function() {
+        $("#kakaoLogin").on('click touchstart',function() {
             $("#kakao-login-btn").trigger('click');
         });
         getTravelList();
 
         $('.navbar-collapse ul li a:not(.dropdown-toggle)').bind('click touchstart', function () {
-            if(event.target.className != "dropdown-toggle" && event.target.id != "findBuddy") {
+            /*if(event.target.className != "dropdown-toggle" && event.target.id != "findBuddy") {
                 $('.navbar-toggle:visible').click();
+            }*/
+
+            if(event.target.id == "login_name") {
+                $('.navbar-toggle:visible').click();
+
             }
         });
 

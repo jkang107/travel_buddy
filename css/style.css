@@ -749,19 +749,15 @@ textarea {
 		-ms-transition: all 0.3s ease-in-out;
 		transition: all 0.3s ease-in-out;
 	}
-}
+}*/
 @media (min-width:768px) and (max-width:991px) {
-	.main-navigation .container-fluid {
-		padding-left: 0;
-		padding-right: 0;
+	#firstPage_btn_container {
+		margin-top: 200px;
 	}
-	.navbar-nav {
-		float: left !important;
-	}
-} */
+} 
 @media (max-width:767px) {
 	.banner-caption h1{
-		font-size: 30px;
+		font-size: 40px;
 	}
     .banner-caption {
     	top: 30%;
@@ -769,4 +765,22 @@ textarea {
     #navbar-collapse-1{
     	background-color: black;
     }
-}
+    .panel-title img{
+    	width:30px;
+    	height: 30px;
+    	margin-right: 8px;
+    }
+    .panel-title span {
+    	line-height: 30px;
+    	font-size: 70%;
+    }
+    .panel-title a {
+    	padding: 8px 25px 7px 10px;
+    }
+    .lead {
+    	font-size: 13px;
+    }
+    #firstPage_btn_container {
+		margin-top: 100px;
+	}
+}	
