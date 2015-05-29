@@ -786,7 +786,19 @@ textarea {
 	  height: 600px;
 	  overflow-y:auto;
 	}
+	#login {
+		transform: translate(-50%, -50%);
+	}
 } 
+@media (max-width:450px) {
+	#login {
+		transform: none;
+		width: 18em;
+		height: 14em;
+		margin-top: -7em;
+		margin-left: -9em;
+	}
+}
 @media (max-width:767px) {
 	#profil_img {
 		margin-top: 0px;
