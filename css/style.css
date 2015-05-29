@@ -754,8 +754,22 @@ textarea {
 	#firstPage_btn_container {
 		margin-top: 200px;
 	}
+	#travelList_container {
+	  height: 600px;
+	  overflow-y:auto;
+	}
 } 
 @media (max-width:767px) {
+	#profil_img {
+		margin-top: 0px;
+	}
+	#login {
+		transform: none;
+		width: 18em;
+		height: 14em;
+		margin-top: -7em;
+		margin-left: -9em;
+	}
 	.banner-caption h1{
 		font-size: 40px;
 	}
@@ -792,6 +806,7 @@ textarea {
 		border-top: solid 2px black;
   		border-bottom: solid 2px black;
   		background-color: white;
+  		/*height: 450px;*/
 	}
 	#about {
 		font-size: 25px;

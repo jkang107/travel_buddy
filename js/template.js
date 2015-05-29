@@ -157,6 +157,11 @@
             }
         });
 
+        if(window.innerWidth < 767) {
+            var listHeight = window.innerHeight - 133;
+            $("#travelList_container").css("height", listHeight);
+        }
+
     }); // End document ready
 
 })(this.jQuery);
