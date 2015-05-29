@@ -500,6 +500,12 @@ textarea {
 		-ms-transition: all 0.3s ease-in-out;
 		transition: all 0.3s ease-in-out;
 	}
+	.logo{
+		margin: 10px 10px 10px 0;
+	}
+	.site-name {
+		font-size: 36px;
+	}
 }
 @media (min-width:768px) and (max-width:991px) {
 	.main-navigation .container-fluid {
@@ -509,7 +515,7 @@ textarea {
 	.navbar-nav {
 		float: left !important;
 	}
-	.log{
+	.logo{
 		margin: 10px 10px 10px 0;
 	}
 	.site-name {
@@ -778,7 +784,7 @@ textarea {
 		transition: all 0.3s ease-in-out;
 	}
 }*/
-@media (min-width:768px) and (max-width:991px) {
+@media (min-width:768px) and (max-width:1920px) {
 	#firstPage_btn_container {
 		margin-top: 200px;
 	}
@@ -799,12 +805,17 @@ textarea {
 		margin-left: -9em;
 	}
 }
+@media (min-width:450px) and (max-width:767px) {
+	#login {
+		transform: translate(-50%, -50%);
+	}
+}
 @media (max-width:767px) {
 	#profil_img {
 		margin-top: 0px;
 	}
 	#login {
-		transform: translate(-50%, -50%);
+		/*transform: translate(-50%, -50%);*/
 		/*width: 18em;
 		height: 14em;
 		margin-top: -7em;
