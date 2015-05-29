@@ -55,7 +55,7 @@
                         var screenWidth = $(window).width();
                         var scrollLenght = 151;
                         if(screenWidth < 767) {
-                            scrollLenght = scrollLenght - 72;
+                            scrollLenght = scrollLenght - 116;//- 72;
                         }
                         $('html,body').animate({
                             scrollTop: target.offset().top - scrollLenght
