@@ -804,4 +804,7 @@ textarea {
   		-moz-columns: 9em;
   		columns: 9em;*/
 	}
+	.section {
+		padding: 50px 0;
+	}
 }	
