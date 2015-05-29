@@ -138,6 +138,13 @@ a:hover, a:focus { text-decoration: none; }
   #profil_img {
     margin-top: 0px;
   }
+  #login {
+    transform: none;
+    width: 18em;
+    height: 14em;
+    margin-top: -7em;
+    margin-left: -9em;
+  }
 }
 
 #travelList_container {
