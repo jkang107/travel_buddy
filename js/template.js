@@ -151,7 +151,7 @@
                 $('.navbar-toggle:visible').click();
             }*/
 
-            if(event.target.id == "login_name") {
+            if(event.target.id == "login_name" && event.target.className != "dropdown-toggle") {
                 $('.navbar-toggle:visible').click();
 
             }
