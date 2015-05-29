@@ -55,7 +55,7 @@
                         var screenWidth = $(window).width();
                         var scrollLenght = 151;
                         if(screenWidth < 767) {
-                            scrollLenght = scrollLenght - 116;//- 72;
+                            scrollLenght = scrollLenght - 76;//- 72;
                         }
                         $('html,body').animate({
                             scrollTop: target.offset().top - scrollLenght
@@ -158,7 +158,7 @@
         });
 
         if(window.innerWidth < 767) {
-            var listHeight = window.innerHeight - 133;
+            var listHeight = window.innerHeight - 180;
             $("#travelList_container").css("height", listHeight);
         }
 
