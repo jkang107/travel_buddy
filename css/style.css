@@ -793,10 +793,10 @@ textarea {
 	}
 	#login {
 		transform: none;
-		width: 18em;
+		/*width: 18em;
 		height: 14em;
 		margin-top: -7em;
-		margin-left: -9em;
+		margin-left: -9em;*/
 	}
 	.banner-caption h1{
 		font-size: 40px;
