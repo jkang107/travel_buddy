@@ -157,5 +157,36 @@ body{
 ::-webkit-scrollbar-track {  background-color: #999;}
 ::-webkit-scrollbar-track-piece { background-color: #ffffff;}
 ::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
-::-webkit-scrollbar-corner { background-color: #999;}}
+::-webkit-scrollbar-corner { background-color: #999;}
 ::-webkit-resizer { background-color: #666;}
+
+.filter {
+  height:60px;
+  width:48%;
+  background-color: white;
+  /*border: solid 1px black;*/
+  float: left;
+  position: relative;
+  line-height: 60px;
+  font-family: 'Jeju Hallasan', serif;
+  font-size: 120%;
+  opacity: 0.8;
+  margin: 2px;
+}
+.filter:hover {
+  opacity:1;
+}
+
+hr {
+    border-top: 3px solid #00CCCC;
+    margin-top: 0px;
+}
+
+#kakaoID {
+  width:60%;
+}
+
+/*.form-group.required .control-label:before { 
+   content:"*";
+   color:red;
+}*/

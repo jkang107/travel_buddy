@@ -786,7 +786,7 @@ textarea {
 }*/
 @media (min-width:768px) and (max-width:1920px) {
 	#firstPage_btn_container {
-		margin-top: 200px;
+		margin-top: 100px;
 	}
 	#travelList_container {
 	  height: 600px;

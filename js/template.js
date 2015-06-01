@@ -124,7 +124,7 @@
 
         $("#submit_travel").on('click touchstart', addNewTravel);
         $("#travel_type").on('click touchstart',chooseTravelType);
-        $("#newTravelBtn").on('click touchstart',showTravelForm);
+        $("#newTravelBtn").on('click touchend',showTravelForm);
 
         $('.datepicker-container-range .input-daterange').datepicker({
             todayBtn: true,
